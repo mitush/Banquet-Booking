@@ -1,0 +1,93 @@
+div.jumbotron.jbm{
+  background-color:black;
+  color:grey;
+}
+
+img.imgicon{
+  height:50%;
+  width:50%;
+}
+
+i.glyphicon.glyphicon-user.usercst{
+  font-size:500%;
+  margin-left:46%;
+  margin-top:-1%;
+}
+
+span.label.label-primary.lbl{
+  font-size:x-large;
+}
+
+input.form-control.input-lg.inp1{
+  width:50%;
+}
+
+span.label.label-primary.lbl{
+  margin-top:25px;
+}
+
+input.form-control.input-lg.inp1{
+  margin-top:-3%;
+  margin-left:35%;
+}
+
+span.label.label-primary.lbl{
+  margin-left:10%;
+}
+
+span.label.label-primary.lbl{
+}
+
+form.frm{
+  height:190px;
+  margin-top:5%;
+}
+
+input.input-lg.inp1{
+  margin-left:41%;
+}
+
+input.input-lg.inp3{
+  margin-left:35%;
+}
+
+input.input-lg.inp2{
+  margin-left:41%;
+}
+
+div.det{
+  height:240px;
+  background-color:rgb(43,43,47);
+  color:white;
+}
+
+label.lbldet{
+  height:50px;
+  margin-left:8%;
+  margin-top:5%;
+}
+
+input.emailadd{
+  margin-left:16%;
+}
+
+label.contact{
+}
+
+input.input-lg.contladd{
+  margin-left:15%;
+}
+
+div.btnbook{
+  background-color:grey;
+  margin-top:2%;
+}
+
+button.btn.btn-default.oldb{
+}
+
+button.btn.btn-primary.btn-block.btn-sm.oldb{
+  width:50%;
+  margin-left:25%;
+}
+
