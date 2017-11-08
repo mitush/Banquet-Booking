@@ -11,7 +11,11 @@
 </head>
 
 <body class="bdy">
+<!-- Checking Session for User -->
+<?php
 
+?>
+<!-- Ending Session for USer -->
     <nav class="navbar navbar-default navbar-fixed-top cst">
         <div class="container-fluid">
             <div class="navbar-header"><a class="navbar-brand navbar-link cst" href="">BookmyBanquet</a>
@@ -24,9 +28,9 @@
             </div>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav navbar-right navcss">
-                    <li role="presentation">
+                   <!--  <li role="presentation">
                         <a href="#">Book Now</a>
-                    </li>
+                    </li> -->
                     <li role="presentation">
                         <a href="#aboutusid">About Us</a>
                     </li>
@@ -66,31 +70,77 @@
                         <!-- Trying php for form validation -->
                         <?php
                              include("server.php");
-                             if ( isset( $_POST['login1'] )){   
-                                session_start();
+                                if (!isset($_SESSION)){
+                                    session_start();
+                                }
+
+
+                                if ( isset( $_POST['login1'] )){   
+                                
+
                                 $mob = $_POST['mobile1'];           
                                 $pass = $_POST['pass1'];
                                 $_SESSION['mob']=$mob;
                                 $_SESSION['pass']=$pass;
-                                $sql_query = "Select * from RegisterUser where Mobile='$mob' and Password='$pass1'";
+                                $sql_query = "Select * from User where Mobile='$mob' and Password='{$pass}' ";
+                                // echo $mob;
+                                // echo $pass;
                                 $result= $conn->query($sql_query);
                                 // $result = mysqli_query($sql_query,$conn);
-                                if($result->num_rows == 0){
+                                if($result->num_rows > 0){
                                     // echo "<script language='javascript' type='text/javascript' location.href='../LoginPage/index.php'> </script>" ;
-                                    header("location:../LoginPage/index.php");
+                                    $row  = $result->fetch_assoc();
+                                    $_SESSION['name'] = $row['Name'];
+                                    $_SESSION['email'] = $row['Email'];
+                                    $_SESSION['logged'] = true;
+                                    // $_SESSION['mob'] = $row['Mobile'];
+                                    $test = $_SESSION['name'];
+                                     // echo "$test";
+                                    // header("location:tryp.php");
+                                   header("location:../LoginPage/index.php");
                                 }
                                 else{
                                     echo "<script language='javascript' type='text/javascript'>alert('Mobile or Password Incorrect')</script> " ;
                                 }
                             }
                         ?>
-                        <!-- Endinhg php -->
-                        <form >
+                        <!-- Ending php -->
+                        <form  class="formcst" method="POST">
                             <input class="form-control input-lg cst" type="text" placeholder="Enter Your Name" name = "name1">
                             <input class="form-control input-lg cst" type="text" placeholder="Enter Mobile Number" name="mobile2">
+                            <input class="form-control input-lg cst" type="email" placeholder="Enter Email " name="email1">
                             <input class="form-control input-lg cst" type="password" placeholder="Enter Password" name="pass2">
-                            <button class="btn btn-primary btn-block btn-lg cst" type="submit" name="sign">Sign Up </button>
+                            <input class="btn btn-primary btn-block btn-lg cst" type="submit" name="signup" value="Signup">
                         </form>
+                        <!-- Starting Signup PHP -->
+                        <?php
+                            include("server.php");
+                            if (isset($_POST['signup'])) {
+                                $mob = $_POST['mobile2'];
+                                $name = $_POST['name1'];
+                                $pass = $_POST['pass2'];
+                                $email = $_POST['email1'];
+                                $sql_query = "Select * from User where Mobile ='$mob' ";
+                                $result = $conn->query($sql_query);
+                                if ($result->num_rows == 0 ) {
+                                    //insertion for a new user
+                                     $sql_query = "Insert into User values ('{$name}','{$mob}','{$email}','{$pass}')";
+                                     $res = $conn->query($sql_query);
+                                     if (!$res){
+                                        echo "User not created ";
+                                     }
+                                     else{
+                                        echo "<script language='javascript' type='text/javascript'>alert('User Successfully Created!! Please Login.')</script>";
+                                         // header("location:index.php");
+                                     }
+
+                                }
+                                else{
+                                        echo "<script language='javascript' type='text/javascript'>alert('User Already Exists.')</script>";
+                                }
+                            }
+                        ?>
+                        <!-- Ending Signup PHP -->
                     </div>
 
                     <div class="modal-footer"></div>
@@ -168,7 +218,7 @@
         <h2 class="text-uppercase text-center text-primary abut" id="aboutusid">About us</h2>
         <img src="assets/img/decorator4.jpg" class="aboutus">
         <p class="lead text-center conte">
-            <strong><em>We try to make your memorable events wondefrful and complete..... Book My Banquet</em></strong>
+            <strong><em>We try to make your memorable events wonderful and complete..... Book My Banquet</em></strong>
         </p>
     </div>
 

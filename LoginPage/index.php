@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
+<?php
+    include("../Homepage/server.php");
+    if (!isset($_SESSION)){
+             session_start();
+    }
+    if (!isset($_SESSION['logged']) || $_SESSION['logged']==false){
+        header("location:../Homepage/index.php");
+    }
 
+?>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,14 +21,14 @@
 <body>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <div class="navbar-header"><a class="navbar-brand navbar-link" href="#">BookmyBanquet</a>
+            <div class="navbar-header"><a class="navbar-brand navbar-link" href="">BookmyBanquet</a>
                 <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
             </div>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active" role="presentation"><a href="#">About Us</a></li>
-                    <li role="presentation"><a href="#">Contact Us</a></li>
-                    <li role="presentation"><a href="#">Logout </a></li>
+                    <!-- <li class="active" role="presentation"><a href="#">About Us</a></li> -->
+                    <li role="presentation"><a href="#contactusid">Contact Us</a></li>
+                    <li role="presentation"><a href="logout.php">Logout </a></li>
                 </ul>
             </div>
         </div>
@@ -54,17 +63,34 @@
 
                             <ul style="list-style: none;">
                                  <li class="text-info">Full Name *</li>
-                                 <li><input type="text" name="name" placeholder="" required></li>
+                                 <?php 
+                                    session_start();
+                                    $test = $_SESSION['name'];
+                                 echo '
+                                 <li><input type="text" name="name" placeholder= "'.$test.'" readonly></li>
+                                 ';
+                                 ?>
                                  <div class="clear"></div>
                              </ul>
                              <ul style="list-style: none;">
                                  <li class="text-info">Email ID *</li>
-                                 <li><input type="text" name="email" placeholder="" required></li>
+                                 <?php
+                                 session_start();
+                                    $test = $_SESSION['email'];
+                                 echo '
+                                 <li><input type="text" name="email" placeholder="'.$test.'" readonly></li>
+                                 ';
+                                 ?>
                                  <div class="clear"></div>
                              </ul>
                              <ul style="list-style: none;">
                                  <li class="text-info">Phone Number *</li>
-                                 <li><input type="text" name="phone" placeholder="" required></li>
+                                 <?php
+                                 session_start();
+                                    $test = $_SESSION['mob'];
+                                 echo '
+                                 <li><input type="text" name="phone" placeholder="'.$test.'" readonly></li>
+                                 ';?>
                                  <div class="clear"></div>
                              </ul>
                              <ul style="list-style: none;">
@@ -127,13 +153,49 @@
                                 <li><textarea placeholder="State if you need any additional service you want" name="info" class="form-control" rows="5"></textarea></li>
                             </ul>
                             <button class="btn btn-primary btn-block btn-lg cst " type="submit" value="Submit" style="margin-bottom: 
-                            2%;">Submit
+                            2%;" name ="Enter">Submit
                             </button>
                         </form>
                         <!-- trying php for entering data in database -->
-                        <?php  
+                        <?php 
+                            include("../Homepage/server.php");
+                            if (!isset($_SESSION)){
+                                session_start();
+                            }
+                            if (isset($_POST['Enter'])){//}
+                                     $mob = $_SESSION['mob'];
+                                     $state = $_POST['state'];
+                                     $city = $_POST['city'];
+                                                // $name = $_POST['name'];
+                                                // $email = $_POST['email'];
+                                                // $phone = $_POST['phone'];
+                                     $rawdate1 = htmlentities($_POST['startdate']);
+                                     $startdate = date('Y-m-d', strtotime($rawdate1));
 
-                        ?>
+                                     $rawdate2 = htmlentities($_POST['enddate']);
+                                     $enddate = date('Y-m-d', strtotime($rawdate2));
+                                     $address = $_POST['address'];
+                                     $occasion = $_POST['occasion'];
+                                     $guests = $_POST['guests'];
+                                     $info = $_POST['info'];
+
+
+
+                                        echo $state;
+
+
+
+
+        $sql="INSERT INTO Booking VALUES ('{$mob}','{$state}','{$city}','{$startdate}','{$enddate}','{$address}','{$occasion}','{$guests}','{$info}')";
+
+                            if ($conn->query($sql) === TRUE){
+                                echo "New record created successfully";
+                            } 
+                            else {
+                                echo "Error: " . $sql . "<br>" . $conn->error;
+                            }
+                        }
+                    ?>
                         <!-- ending php for database service -->
                         </center>
                     </div>
@@ -143,20 +205,32 @@
         </div>
     </div>
     <!-- ending trying modal -->
+    <?php
+         include("../Homepage/server.php");
+         if (!isset($_SESSION)){
+            session_start();
+         }
+         $name = $_SESSION['name'];
+         $email  = $_SESSION['email'];
+         $mob    = $_SESSION['mob'];
+         // echo "abcd $name $email $mob";
+        echo '
     <div class="jumbotron jbm"><i class="glyphicon glyphicon-user usercst"></i>
-        <h3 class="text-center usr"> Your Name </h3></div>
+        <center><h3 class="text-center usr">  '.$name.' </h3></div></center>
     <div class="container">
         <div class="det">
             <div>
                 <label class="lbldet">Email Address </label>
-                <input class="input-lg emailadd" type="text">
+                <input class="input-lg emailadd" type="text" placeholder =" '.$email.' " readonly >
             </div>
             <div>
                 <label class="lbldet">Contact Number</label>
-                <input class="input-lg contladd" type="text">
+                <input class="input-lg contladd" type="text" placeholder = "'.$mob.'" readonly>
             </div>
         </div>
     </div>
+    ';
+    ?>
     <div class="btnbook">
         <center>
         <input class="btn btn-primary btn-block btn-lg oldb" type="submit" data-toggle="modal" data-target="#bookmodal" value="Book New" style=" width: 500px;">
@@ -168,6 +242,20 @@
             </form>
         </center>
     </div>
+    <div class="container" id="contactusid">
+        <h2 class="text-uppercase text-center contact" id="contactus"><strong>Contact Us</strong></h2>
+        <form class="cntfrm">
+            <input class="form-control input-lg emil" type="text" placeholder="Enter your Email" >
+            <textarea class="form-control input-lg emil" placeholder="Enter Your Query" ></textarea>
+            <button class="btn btn-primary btn-block btn-lg contactbtn" type="submit">Contact Us</button>
+        </form>
+    </div>
+    
+    <footer>
+        <div>
+            <h4 class="text-left text-muted bg-info">An ISO9000 Company</h4>
+        </div>
+    </footer>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
