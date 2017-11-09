@@ -73,11 +73,7 @@
                                 if (!isset($_SESSION)){
                                     session_start();
                                 }
-
-
                                 if ( isset( $_POST['login1'] )){   
-                                
-
                                 $mob = $_POST['mobile1'];           
                                 $pass = $_POST['pass1'];
                                 $_SESSION['mob']=$mob;
@@ -122,10 +118,13 @@
                                 $email = $_POST['email1'];
                                 $sql_query = "Select * from User where Mobile ='$mob' ";
                                 $result = $conn->query($sql_query);
+                                echo $result->num_rows;
                                 if ($result->num_rows == 0 ) {
                                     //insertion for a new user
-                                     $sql_query = "Insert into User values ('{$name}','{$mob}','{$email}','{$pass}')";
-                                     $res = $conn->query($sql_query);
+                                        echo "$name $mob $email $pass";
+                                     $sql = "Insert into User values ('{$name}','{$mob}','{$email}','{$pass}')";
+                                     $res = $conn->query($sql);
+                                     echo "result is $res";
                                      if (!$res){
                                         echo "User not created ";
                                      }

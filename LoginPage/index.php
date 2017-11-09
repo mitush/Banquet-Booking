@@ -8,7 +8,6 @@
     if (!isset($_SESSION['logged']) || $_SESSION['logged']==false){
         header("location:../Homepage/index.php");
     }
-
 ?>
 <head>
     <meta charset="utf-8">
@@ -17,7 +16,6 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
-
 <body>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -26,7 +24,6 @@
             </div>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <!-- <li class="active" role="presentation"><a href="#">About Us</a></li> -->
                     <li role="presentation"><a href="#contactusid">Contact Us</a></li>
                     <li role="presentation"><a href="logout.php">Logout </a></li>
                 </ul>
@@ -102,7 +99,6 @@
                             <ul style="list-style: none;">
                                 <li class="text-info">Booking End Date *</li>
                                 <li class="dat"><input name="enddate" placeholder="yyyy-mm-dd" type="date" required=></li>
-                                
                                 <div class="clear"></div>
                             </ul>
                             <ul style="list-style: none;">
@@ -110,7 +106,6 @@
                                 <li><textarea name="address" class="form-control" rows="5"></textarea></li>
                                 <div class="clear"></div>
                             </ul>
-                             
                              <ul style="list-style: none;">
                                  <li class="text-info">Occasion *</li>
                                  <li class="se">
@@ -152,9 +147,7 @@
                              <li class="text-info">Additional Information :</li>
                                 <li><textarea placeholder="State if you need any additional service you want" name="info" class="form-control" rows="5"></textarea></li>
                             </ul>
-                            <button class="btn btn-primary btn-block btn-lg cst " type="submit" value="Submit" style="margin-bottom: 
-                            2%;" name ="Enter">Submit
-                            </button>
+<button class="btn btn-primary btn-block btn-lg cst" type="submit" value="Submit" style="margin-bottom:2%;" name ="Enter">Submit</button>
                         </form>
                         <!-- trying php for entering data in database -->
                         <?php 
@@ -166,26 +159,14 @@
                                      $mob = $_SESSION['mob'];
                                      $state = $_POST['state'];
                                      $city = $_POST['city'];
-                                                // $name = $_POST['name'];
-                                                // $email = $_POST['email'];
-                                                // $phone = $_POST['phone'];
                                      $rawdate1 = htmlentities($_POST['startdate']);
                                      $startdate = date('Y-m-d', strtotime($rawdate1));
-
                                      $rawdate2 = htmlentities($_POST['enddate']);
                                      $enddate = date('Y-m-d', strtotime($rawdate2));
                                      $address = $_POST['address'];
                                      $occasion = $_POST['occasion'];
                                      $guests = $_POST['guests'];
                                      $info = $_POST['info'];
-
-
-
-                                        echo $state;
-
-
-
-
         $sql="INSERT INTO Booking VALUES ('{$mob}','{$state}','{$city}','{$startdate}','{$enddate}','{$address}','{$occasion}','{$guests}','{$info}')";
 
                             if ($conn->query($sql) === TRUE){
@@ -204,7 +185,7 @@
             </div>
         </div>
     </div>
-    <!-- ending trying modal -->
+    <!-- ending modal -->
     <?php
          include("../Homepage/server.php");
          if (!isset($_SESSION)){
@@ -213,10 +194,9 @@
          $name = $_SESSION['name'];
          $email  = $_SESSION['email'];
          $mob    = $_SESSION['mob'];
-         // echo "abcd $name $email $mob";
         echo '
-    <div class="jumbotron jbm"><i class="glyphicon glyphicon-user usercst"></i>
-        <center><h3 class="text-center usr">  '.$name.' </h3></div></center>
+    <div class="jumbotron jbm"><i class="glyphicon glyphicon-user usercst" style="margin-left:50%;"></i>
+        <h3 class="text-center usr" style="margin-left:4%;">  '.$name.' </h3></div>
     <div class="container">
         <div class="det">
             <div>
@@ -234,11 +214,9 @@
     <div class="btnbook">
         <center>
         <input class="btn btn-primary btn-block btn-lg oldb" type="submit" data-toggle="modal" data-target="#bookmodal" value="Book New" style=" width: 500px;">
-        
             <form action="oldbooking.php"  method="POST" target="_blank">
             <input class="btn btn-primary btn-block btn-lg oldb" type="submit" value="
             Old Bookings" style="margin-top: 1%; width: 500px;">
-            <!-- </button> -->
             </form>
         </center>
     </div>
@@ -250,7 +228,6 @@
             <button class="btn btn-primary btn-block btn-lg contactbtn" type="submit">Contact Us</button>
         </form>
     </div>
-    
     <footer>
         <div>
             <h4 class="text-left text-muted bg-info">An ISO9000 Company</h4>
